@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Supply Chain System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="brand">📦 SupplyChain Pro</div>
+        <ul class="nav-links">
+            <li class="nav-item"><a href="dashboard.html">📊 Dashboard</a></li>
+            <li class="nav-item"><a href="products.html">📦 Products & Inventory</a></li>
+            <li class="nav-item"><a href="suppliers.html">🏬 Suppliers</a></li>
+            <li class="nav-item"><a href="orders.html">🛒 Customer Orders</a></li>
+            <li class="nav-item"><a href="shipments.html">🚚 Shipment Tracking</a></li>
+            <li class="nav-item active"><a href="reports.html">📈 Reports & Analytics</a></li>
+            <li class="nav-item" style="margin-top: auto;"><a href="index.html" style="color: #ef4444;">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="font-size: 1.8rem;">Reports & Executive Analytics</h1>
+                <p style="color: var(--text-muted);">Summary reports, inventory valuations, and data export tools</p>
+            </div>
+            <button onclick="window.location.href='dashboard.html'" class="btn-secondary btn-sm">← Back to Dashboard</button>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <div class="card">
+                <h2 class="card-title" style="margin-bottom: 12px;">📊 Inventory Valuation Report</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Download complete product inventory audit report with stock quantities and total monetary values.</p>
+                <button onclick="exportCSV('inventory')">Download Inventory CSV</button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title" style="margin-bottom: 12px;">🏬 Supplier Performance Report</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Export registered supplier profiles, quality ratings, and contact directories.</p>
+                <button onclick="exportCSV('suppliers')" class="btn-secondary">Download Supplier CSV</button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title" style="margin-bottom: 12px;">🚚 Freight & Shipment Audit</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Export live cargo shipments, carrier performance, and delivery timelines.</p>
+                <button onclick="exportCSV('shipments')" class="btn-secondary">Download Shipment CSV</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+async function exportCSV(type) {
+    let data = [];
+    let filename = type + '_report.csv';
+
+    try {
+        if (type === 'inventory') {
+            const products = await apiFetch('/products');
+            data = products.map(p => ({ ID: p.id, Name: p.product_name, Category: p.category, Stock: p.quantity, Price: p.price, Supplier: p.supplier_name }));
+        } else if (type === 'suppliers') {
+            const suppliers = await apiFetch('/suppliers');
+            data = suppliers.map(s => ({ ID: s.id, Name: s.supplier_name, Contact: s.contact_person, Email: s.email, Phone: s.phone, Rating: s.rating }));
+        } else if (type === 'shipments') {
+            const shipments = await apiFetch('/shipments');
+            data = shipments.map(s => ({ Tracking: s.tracking_number, Carrier: s.carrier, Origin: s.origin, Destination: s.destination, Location: s.current_location, Status: s.status, ETA: s.estimated_delivery }));
+        }
+
+        if (!data || data.length === 0) {
+            alert('No data available to export.');
+            return;
+        }
+
+        const headers = Object.keys(data[0]).join(',');
+        const rows = data.map(obj => Object.values(obj).map(v => `"${v || ''}"`).join(','));
+        const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (e) {
+        alert('Failed to export CSV: ' + e.message);
+    }
+}
+</script>
+</body>
+</html>
