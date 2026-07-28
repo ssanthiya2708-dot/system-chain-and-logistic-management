@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracking - Supply Chain System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="brand">📦 SupplyChain Pro</div>
+        <ul class="nav-links">
+            <li class="nav-item"><a href="dashboard.html">📊 Dashboard</a></li>
+            <li class="nav-item"><a href="products.html">📦 Products & Inventory</a></li>
+            <li class="nav-item"><a href="suppliers.html">🏬 Suppliers</a></li>
+            <li class="nav-item"><a href="orders.html">🛒 Customer Orders</a></li>
+            <li class="nav-item active"><a href="shipments.html">🚚 Shipment Tracking</a></li>
+            <li class="nav-item"><a href="reports.html">📈 Reports & Analytics</a></li>
+            <li class="nav-item" style="margin-top: auto;"><a href="index.html" style="color: #ef4444;">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="font-size: 1.8rem;">Live Freight & Shipment Route Tracker</h1>
+                <p style="color: var(--text-muted);">Real-time tracking numbers, carrier hubs, and transit milestones</p>
+            </div>
+            <button onclick="window.location.href='dashboard.html'" class="btn-secondary btn-sm">← Back to Dashboard</button>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Active Freight Cargo Movements</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tracking Number</th>
+                        <th>Carrier</th>
+                        <th>Origin → Destination</th>
+                        <th>Current Hub Location</th>
+                        <th>Status</th>
+                        <th>Est. Delivery</th>
+                    </tr>
+                </thead>
+                <tbody id="shipments-table-body">
+                    <tr><td colspan="6" style="text-align:center;">Loading live shipment telemetry...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
