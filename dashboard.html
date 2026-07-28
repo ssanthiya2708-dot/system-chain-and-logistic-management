@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Supply Chain Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            📦 SupplyChain Pro
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active"><a href="dashboard.html">📊 Dashboard</a></li>
+            <li class="nav-item"><a href="products.html">📦 Products & Inventory</a></li>
+            <li class="nav-item"><a href="suppliers.html">🏬 Suppliers</a></li>
+            <li class="nav-item"><a href="orders.html">🛒 Customer Orders</a></li>
+            <li class="nav-item"><a href="shipments.html">🚚 Shipment Tracking</a></li>
+            <li class="nav-item"><a href="reports.html">📈 Reports & Analytics</a></li>
+            <li class="nav-item" style="margin-top: auto;"><a href="index.html" style="color: #ef4444;">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="font-size: 1.8rem;">Logistics Executive Dashboard</h1>
+                <p style="color: var(--text-muted);">Real-time MySQL Database Metrics & Operations Overview</p>
+            </div>
+            <div>
+                <span class="badge badge-success">● Database Connected</span>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid" id="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-title">Total Products</div>
+                <div class="stat-value" id="stat-products">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Active Suppliers</div>
+                <div class="stat-value" id="stat-suppliers">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Total Orders</div>
+                <div class="stat-value" id="stat-orders">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Active Shipments</div>
+                <div class="stat-value" id="stat-shipments">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Inventory Valuation</div>
+                <div class="stat-value" id="stat-value">$0.00</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions & Recent Shipments -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Live Freight & Active Shipments</h2>
+                    <a href="shipments.html" class="btn-sm btn-secondary" style="text-decoration: none;">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking #</th>
+                            <th>Carrier</th>
+                            <th>Route</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipments-table-body">
+                        <tr><td colspan="5" style="text-align:center;">Loading shipments from MySQL...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title" style="margin-bottom: 16px;">Quick Management</h2>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button onclick="window.location.href='products.html'">📦 Manage Inventory</button>
+                    <button onclick="window.location.href='suppliers.html'" class="btn-secondary">🏬 Manage Suppliers</button>
+                    <button onclick="window.location.href='orders.html'" class="btn-secondary">🛒 Process Orders</button>
+                    <button onclick="window.location.href='reports.html'" class="btn-secondary">📈 Export Reports</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
